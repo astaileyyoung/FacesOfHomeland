@@ -1,6 +1,7 @@
 import ast 
 import shutil
 from pathlib import Path 
+from argparse import ArgumentParser
 
 import cv2
 import numpy as np
@@ -104,13 +105,21 @@ def save_fig(i,
     plt.savefig(str(fig_fp))
 
 
-def main():
+def get_episodes(faces,
+                 episodes):
     df = pd.read_csv('./data/faces.csv', index_col=0)
     episode_df = pd.read_csv('./data/episodes.csv', index_col=0)
     df = df.merge(episode_df[['imdb_id', 'cast']],
                   on='imdb_id',
                   how='left'
                  )
+    return df
+
+
+def main():
+    df = get_episodes('./data/faces.csv'),
+                      './data/episodes.csv')
+    
     files = [x for x in Path('./data/images').iterdir()]
 
     print('Getting images ...')
@@ -118,6 +127,7 @@ def main():
     df_fp = df.merge(fp_df,
                         on=['frame_num', 'face_num', 'season', 'episode'],
                         how='inner')
+
     
     fig_dir = Path('./data/figures')
     if not fig_dir.exists():
@@ -162,4 +172,7 @@ def main():
             pb.update()
 
 
-main()
+if __name__ == '__main__':
+    main()
+
+    
