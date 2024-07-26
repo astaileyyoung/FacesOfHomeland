@@ -12,3 +12,5 @@ data/classes.csv
 data/training
 .ipynb_checkpoints
 .idea
+data/homeland_2011_1796960/*
+.vscode
